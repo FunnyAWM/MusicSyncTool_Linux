@@ -11,33 +11,36 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_PREFIX_PATH "/home/funnyawm/Qt/6.8.1/gcc_64")
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql)
-find_package(Qt6 REQUIRED COMPONENTS Widgets Sql)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Sql Multimedia Concurrent)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Sql Multimedia Concurrent)
 find_package(ZLIB)
 find_package(TagLib 2.0.0 REQUIRED)
+find_package(Qt6 REQUIRED COMPONENTS LinguistTools)
 
 set(PROJECT_SOURCES
-    main.cpp
-    AboutPage.cpp
-    LoadingPage.cpp
-    MusicSyncTool.cpp
-    ShowDupe.cpp
-    Settings.cpp
-    CopyResult.cpp
-    Settings.h
-    AboutPage.h
-    LoadingPage.h
-    MusicSyncTool.h
-    ShowDupe.h
-    CopyResult.h
-    AboutPage.ui
-    LoadingPage.ui
-    MusicSyncTool.ui
-    Settings.ui
-    ShowDupe.ui
-    CopyResult.ui
-    MusicSyncTool.qrc
-    MusicSyncTool.rc
+        src/main.cpp
+        src/AboutPage.cpp
+        src/LoadingPage.cpp
+        src/MusicSyncTool.cpp
+        src/ShowDupe.cpp
+        src/Settings.cpp
+        src/OperationResult.cpp
+        src/Settings.h
+        src/AboutPage.h
+        src/LoadingPage.h
+        src/MusicSyncTool.h
+        src/ShowDupe.h
+        src/OperationResult.h
+        src/MusicProperties.h
+        src/SettingEntity.h
+        src/AboutPage.ui
+        src/LoadingPage.ui
+        src/MusicSyncTool.ui
+        src/Settings.ui
+        src/ShowDupe.ui
+        src/OperationResult.ui
+        resources/MusicSyncTool.qrc
+        resources/MusicSyncTool.rc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -45,6 +48,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
+
+qt_add_translations(MusicSyncTool TS_FILES translations/Translation_en_US.ts translations/Translation_Wenyan.ts translations/Translation_zh_Hans.ts)
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET MusicSyncTool APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
@@ -63,7 +68,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(MusicSyncTool PRIVATE Qt6::Widgets Qt6::Sql)
+target_link_libraries(MusicSyncTool PRIVATE Qt6::Widgets Qt6::Sql Qt6::Multimedia Qt6::Concurrent)
 target_link_libraries(MusicSyncTool PRIVATE TagLib::tag)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
